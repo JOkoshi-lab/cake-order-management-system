@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ケーキ通販</title>
+    
+    <style>
+        
+        body {
+            background-color: #FDF6EC; 
+            color: #4A3B32;            
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        
+        .shop-header {
+            background-color: #6F4E37; 
+            color: #FFFFFF;            
+            text-align: center;
+            padding: 30px 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+        }
+
+        .shop-header h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 2px;
+        }
+
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 50px 20px;
+        }
+
+        
+        table {
+            border-collapse: collapse;
+            background-color: #FFFFFF; 
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        th {
+            background-color: #E6D5C3; 
+            color: #4A3B32;
+            padding: 10px;
+        }
+        td {
+            padding: 10px;
+            border: 1px solid #E6D5C3;
+        }
+        
+        hr {
+            border: 0;
+            border-top: 2px dashed #E6D5C3; 
+            margin: 40px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="shop-header">
+        <h1>🍰 ケーキの注文管理システム 🍰</h1>
+    </header>
+
+    <div class="container">
+
+        <h2>ケーキ一覧</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>PRICE</th>
+            </tr>
+            <tr th:each="cake : ${cakeList}">
+                <td th:text="${cake.id}"></td>
+                <td th:text="${cake.name}"></td>
+                <td th:text="${cake.price} + ' 円'"></td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h2>注文フォーム</h2>
+        <form action="/order" method="post">
+            <div th:each="cake : ${cakeList}">
+                <span th:text="${cake.name}"></span>
+                <input type="number" th:name="|qtt_${cake.id}|" value="0" min="0">
+                <br><br>
+            </div>
+            <button type="submit" style="padding: 10px 20px; background-color: #6F4E37; color: white; border: none; cursor: pointer;">
+                注文する
+            </button>
+        </form>
+
+        <hr>
+
+        <h2>新商品の追加</h2>
+        <form action="/newcake" method="post">
+            商品名 <input type="text" name="name" required>
+            価格 <input type="number" name="price" min="0" required>
+            <button style="padding: 5px 15px;">追加</button>
+        </form>
+
+        <hr>
+
+        <h2>売上履歴</h2>
+        <table>
+            <tr>
+                <th>注文ID</th>
+                <th>時刻</th>
+                <th>商品名</th>
+                <th>単価</th>
+                <th>個数</th>
+            </tr>
+            <tr th:each="sale : ${salesList}">
+                <td th:text="${sale.id}"></td>
+                <td th:text="${sale.time}"></td>
+                <td th:text="${sale.name}"></td>
+                <td th:text="${sale.price}"></td>
+                <td th:text="${sale.quantity}"></td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <h2>総売上</h2>
+        <p th:text="${totalSales} + ' 円'" style="font-size: 24px; font-weight: bold; color: #6F4E37;"></p>
+
+        <hr>
+
+        <h2>販売個数ランキング</h2>
+        <table>
+            <tr>
+                <th>商品名</th>
+                <th>販売数</th>
+            </tr>
+            <tr th:each="r : ${ranking}">
+                <td th:text="${r.name}"></td>
+                <td th:text="${r.total}"></td>
+            </tr>
+        </table>
+
+        <hr>
+
+        <p style="font-size: 16px;">
+            総注文回数：
+            <span th:text="${orderCount}" style="font-weight: bold;"></span> 回
+        </p>
+
+    </div></body>
+</html>
