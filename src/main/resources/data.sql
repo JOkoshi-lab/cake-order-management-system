@@ -1,0 +1,12 @@
+INSERT INTO cake (name, price) VALUES ('モンブラン', 460);
+INSERT INTO cake (name, price) VALUES ('アップルパイ', 490);
+INSERT INTO cake (name, price) VALUES ('チーズケーキ', 480);
+INSERT INTO cake (name, price) VALUES ('ガトーショコラ', 550);
+INSERT INTO o_time (id, time) VALUES ('ORDER001', TIME '12:34:00');
+INSERT INTO o_time (id, time) VALUES ('ORDER002', TIME '12:36:00');
+INSERT INTO o_time (id, time) VALUES ('ORDER003', TIME '12:40:00');
+INSERT INTO o_qtt (time_id, cake_id, quantity) VALUES ('ORDER001', 1, 1);
+INSERT INTO o_qtt (time_id, cake_id, quantity) VALUES ('ORDER001', 2, 1);
+INSERT INTO o_qtt (time_id, cake_id, quantity) VALUES ('ORDER002', 3, 2);
+INSERT INTO o_qtt (time_id, cake_id, quantity) VALUES ('ORDER003', 4, 2);
+INSERT INTO o_qtt (time_id, cake_id, quantity) VALUES ('ORDER003', 2, 3);
